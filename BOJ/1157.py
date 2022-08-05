@@ -1,3 +1,6 @@
+from itertools import count
+
+
 alphabet_list = []
 word = input().upper()
 alphabet_list.extend(word)
@@ -17,7 +20,7 @@ for i in alphabet_list:
     # empty_list에 없다면, 알파벳을 추가하고, list에 append 한다.
     else:
         empty_list.append(i) 
-        answer_list.append({i:alphabet_list.count(i)})
+        answer_list.append({'letter':i, 'count':alphabet_list.count(i)})
 
 # 여기까지 하면 단어가 mississipi라고 할 때,
 # answer list는 다음과 같이 출력된다.
@@ -25,7 +28,15 @@ for i in alphabet_list:
 
 # 이제 lamba 함수를 쓸 차례가 되었다. 하하
 
-sorted_answer_list = sorted(answer_list, key=lambda dict:dict)
+sorted_answer_list = sorted(answer_list, key=lambda dict:-dict.get('count'))
 
-print(answer_list)
+try:
+    if sorted_answer_list[0]['count'] == sorted_answer_list[1]['count']:
+        print('?')
+
+    else:
+        print(sorted_answer_list[0]['letter'])
+
+except:
+    print(sorted_answer_list[0]['letter'])
 
