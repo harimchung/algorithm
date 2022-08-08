@@ -1,5 +1,3 @@
-from itertools import count
-
 
 alphabet_list = []
 word = input().upper()
