@@ -1,23 +1,40 @@
 import sys
-def tomato(si, sj, g):
-    visited = [[0]*m for _ in range(n)]
-    global day
-    global q
-    q = []
-    q.append((si, sj))
-    visited[si][sj] = 1
+from collections import deque
+
+def tomato(q, g):
+    cnt = -1
     while q:
-        i, j = q.pop(0)
-        for di,dj in [[-1,0], [1,0], [0,-1],[0,1]]:
-            ni, nj = i+di, j+dj
+        l = len(q)
+        for _ in range(l):
+            i, j = q.popleft()
+            for di,dj in [[-1,0], [1,0], [0,-1],[0,1]]:
+                ni, nj = i+di, j+dj
+                if 0<= ni < n and 0<= nj < m and g[ni][nj] == 0:
+                    q.append((ni, nj))
+                    g[ni][nj] = 1
+        cnt += 1
 
+    return cnt
 
-    pass
 
 m, n = map(int, sys.stdin.readline().split())
 arr = [list(map(int, sys.stdin.readline().split())) for _ in range (n)]
-total = 0
+
+q = deque()
 for i in range(n):
     for j in range(m):
         if arr[i][j] == 1:
-            tomato(i, j, arr)
+            q.append((i,j))
+
+ans = tomato(q, arr)
+flag = False
+
+for i in range(n):
+    for j in range(m):
+        if arr[i][j] == 0:
+            ans = -1
+            flag = True
+            break
+    if flag:
+        break
+print(ans)
