@@ -3,6 +3,5 @@
 # print(a)
 # print(b)
 
-c = 99*98/2
-print(c)
-
+a = [(1,3), (1,2), (2,4)]
+print(min(a))
