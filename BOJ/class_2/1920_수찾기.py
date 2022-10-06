@@ -1,22 +1,25 @@
 import sys
+def binary_search(s,e,target):
+    middle = (s+e) // 2
+    if s > e:
+        print(0)
+        return
+
+    if target == nl[middle]:
+        print(1)
+        return
+    elif target < nl[middle]:
+        binary_search(s, middle-1, target)
+    elif target > nl[middle]:
+        binary_search(middle+1, e, target)
 
 n = int(sys.stdin.readline())
-check = [0]*(2147483649)
-check_minus = [0]*(2147483649)
-a = list(map(int, sys.stdin.readline().split()))
-
-for i in range(n):
-    if a[i] < 0:
-        check_minus[abs(a[i])] = 1
-    else:
-        check[a[i]] = 1
-
+nl = list(map(int, sys.stdin.readline().split()))
+nl.sort()
 m = int(sys.stdin.readline())
-b = list(map(int, sys.stdin.readline().split()))
+ml = list(map(int, sys.stdin.readline().split()))
 
-for j in range(m):
-    if b[j] < 0:
-        print(check_minus[abs(b[j])])
-    else:
-        print(check[b[j]])
+i, j = 0, len(nl) - 1
+for number in ml:
+    binary_search(i, j, number)
 
