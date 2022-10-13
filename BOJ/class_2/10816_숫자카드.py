@@ -1,30 +1,37 @@
 import sys
-sys.setrecursionlimit(10000)
 
-def search(start, end, target, target_idx): # 이진탐색을 거친다.
-    global ans  # start, end는 각각 시작과 끝 인덱스
+def lower_bound(array, target):
+    left = 0
+    right = len(array)
 
-    if start > end:
-        return
+    while left < right:
+        mid = (left+right) // 2
+        if target <= array[mid]:
+            right = mid
+        else:
+            left = mid+ 1
+    return left
 
-    mid = (end+start)//2
-    if nl[mid] == target: # 이진탐색의 결과가 목표한 숫자라면,
+def upper_bound(array, target):
+    left = 0
+    right = len(array)
+    while left < right:
+        mid = (left+right) // 2
+        if target >= array[mid]:
+            left = mid + 1
+        else:
+            right = mid
+    return left
 
-
-
-    elif nl[mid] < target: # 현재숫자 < 목표숫자이면, 시작지점을 키운다
-        search(mid+1, end, target, target_idx)
-    elif nl[mid] > target :
-        search(start, mid, target, target_idx)
-
-
-
-N = int(input())
-nl = sorted(list(map(int, input().split())))
-M = int(input())
-ml = list(map(int, input().split()))
+N = int(sys.stdin.readline().rstrip())
+nl = sorted(list(map(int, sys.stdin.readline().split())))
+M = int(sys.stdin.readline().rstrip())
+ml = list(map(int, sys.stdin.readline().split()))
 ans = [0] * M
 
-for i in range(M):
-    search(0, N, ml[i], i)
+for i in range(M): # ml의 i 번째 인덱스를 찾아나섭니다.
+    lb = lower_bound(nl, ml[i])
+    ub = upper_bound(nl, ml[i])
+    ans[i] = ub - lb
+
 print(*ans)
